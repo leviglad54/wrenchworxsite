@@ -1,59 +1,439 @@
 import { useState } from 'react'
+import { useForm } from '@formspree/react'
 import './App.css'
 
+const PHONE = '(717) 331-2590'
+const PHONE_LINK = 'tel:+17173312590'
+const FORMSPREE_FORM_ID = import.meta.env.VITE_FORMSPREE_FORM_ID || 'configure-form-id'
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`
+
 const services = [
-  { icon: '⌁', title: 'Diagnostics', text: 'Check-engine lights, no-starts, electrical issues, and honest answers before repairs begin.' },
-  { icon: '◒', title: 'Maintenance', text: 'Oil changes, brakes, batteries, tune-ups, fluids, filters, and seasonal checkups.' },
-  { icon: '✦', title: 'Repairs at your door', text: 'Reliable repairs at home, work, or roadside—without the shop waiting room.' },
+  {
+    number: '01',
+    image: assetUrl('assets/service-diagnostics.png'),
+    icon: '⌕',
+    title: 'Diagnostics',
+    text: 'No-starts, check-engine lights, electrical problems, and mechanical troubleshooting.',
+  },
+  {
+    number: '02',
+    image: assetUrl('assets/service-maintenance.png'),
+    icon: '⚙',
+    title: 'Maintenance',
+    text: 'Oil changes, brakes, batteries, fluids, filters, and routine vehicle maintenance.',
+  },
+  {
+    number: '03',
+    image: assetUrl('assets/service-repairs.png'),
+    icon: '🔧',
+    title: 'Mechanical Repairs',
+    text: 'Practical repair solutions for the problems keeping your vehicle off the road.',
+  },
+  {
+    number: '04',
+    image: assetUrl('assets/service-mobile-service.png'),
+    icon: '⌁',
+    title: 'Mobile Service',
+    text: 'Convenient repairs at your home, workplace, or another suitable location.',
+  },
 ]
 
 function App() {
-  const [sent, setSent] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const phone = '(717)-331-2590'
-  const nav = ['Services', 'How it works', 'Contact']
-  const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); setMenuOpen(false) }
-  const submit = (event) => { event.preventDefault(); setSent(true); event.currentTarget.reset() }
+  const [{ errors, submitting, succeeded }, handleSubmit, reset] = useForm(FORMSPREE_FORM_ID)
+
+  const nav = [
+    { label: 'Services', id: 'services' },
+    { label: 'How It Works', id: 'how-it-works' },
+    { label: 'Contact', id: 'contact' },
+  ]
+
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: 'smooth',
+    })
+
+    setMenuOpen(false)
+  }
 
   return (
-    <main>
-      <header className="site-header">
-        <a className="logo" href="#top" aria-label="WrenchWorx Mobile Mechanic home">
-  <img
-    src="/wrenchworx-logo.png"
-    alt="WrenchWorx Mobile Mechanic"
-    className="logo-image"
-  />
-</a>
-        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">☰</button>
-        <nav className={menuOpen ? 'open' : ''}>{nav.map((item) => <button key={item} onClick={() => scrollTo(item.toLowerCase().replaceAll(' ', '-'))}>{item}</button>)}<a className="nav-phone" href="tel:5558675309">Call now</a></nav>
+    <main style={{ '--process-bg-image': `url("${assetUrl('assets/process-background.png')}")` }}>
+      {/* HEADER */}
+
+      <header className="site-header" id="top">
+        <a
+          className="logo"
+          href="#top"
+          aria-label="WrenchWorx home"
+        >
+          <img
+            src={assetUrl('wrenchworx-logo.png')}
+            alt="WrenchWorx Mobile Mechanic"
+            className="logo-image"
+          />
+        </a>
+
+        <button
+          className="menu-toggle"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+
+        <nav className={menuOpen ? 'open' : ''}>
+          {nav.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollTo(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+
+          <a className="nav-phone" href={PHONE_LINK}>
+            Call Now <span>↗</span>
+          </a>
+        </nav>
       </header>
 
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow">MOBILE AUTO REPAIR · WAYNESBORO, PA</p>
-          <h1>WHEN MOVING PARTS JUST DONT MOVE RIGHT,<br /><em>CALL</em></h1>
-          <p className="lede">Convenient, straightforward auto care that comes to your driveway, office, or wherever you’re parked.</p>
-          <div className="hero-actions"><a className="button button-primary" href="#contact">Request service <span>→</span></a><a className="text-link" href={`tel:7173312590`}>Call {phone}</a></div>
-          <div className="trust"><span>✓ Experienced</span><span>✓ Upfront pricing</span><span>✓ We come to you</span></div>
-        </div>
-          
+      {/* HERO */}
 
+      <section className="hero" id="home">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            MOBILE AUTO REPAIR
+            <span className="eyebrow-divider">///</span>
+            WAYNESBORO, PA
+          </p>
+
+          <h1>
+            YOUR DRIVEWAY.
+            <br />
+            <em>OUR WORKSHOP.</em>
+          </h1>
+
+          <p className="lede">
+            Professional mechanical repairs and practical
+            troubleshooting, brought directly to you.
+            No shop waiting room. No unnecessary runaround.
+          </p>
+
+          <div className="hero-actions">
+            <a
+              className="button button-primary"
+              href="#contact"
+            >
+              REQUEST SERVICE <span>→</span>
+            </a>
+
+            <a className="text-link" href={PHONE_LINK}>
+              <span className="phone-symbol">☎</span>
+              {PHONE}
+            </a>
+          </div>
+
+          <div className="trust">
+            <span>
+              <b>+</b> On-site repairs
+            </span>
+
+            <span>
+              <b>+</b> Straightforward pricing
+            </span>
+
+            <span>
+              <b>+</b> Practical expertise
+            </span>
+          </div>
+        </div>
+
+        <div className="hero-art" aria-label="Distressed steel gear, crossed wrenches, and piston artwork">
+          <img className="hero-illustration" src={assetUrl('assets/hero-workshop.png')} alt="" />
+        </div>
+
+        <div className="hero-bottom-line">
+          <span>WRENCHWORX MOBILE MECHANIC</span>
+          <span>BUILT AROUND THE WAY YOU WORK.</span>
+        </div>
       </section>
+
+      {/* SERVICES */}
 
       <section className="services section" id="services">
-        <div className="section-heading"><p className="eyebrow">WHAT WE DO</p><h2>Real repairs.<br />Right where you are.</h2></div>
-        <div className="service-grid">{services.map((service, index) => <article className="service" key={service.title}><span className="service-number">0{index + 1}</span><div className="service-icon">{service.icon}</div><h3>{service.title}</h3><p>{service.text}</p><a href="#contact">Book this service →</a></article>)}</div>
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">WHAT WE DO</p>
+
+            <h2>
+              REAL REPAIRS.
+              <br />
+              <span>NO RUNAROUND.</span>
+            </h2>
+          </div>
+
+          <p className="section-description">
+            From finding the problem to fixing it, get
+            practical mechanical help where you need it.
+          </p>
+        </div>
+
+        <div className="service-grid">
+          {services.map((service) => (
+            <article
+              className="service"
+              key={service.number}
+            >
+              <div
+                className="service-image"
+                role="img"
+                aria-label={`${service.title} service photo`}
+              >
+                <img className="service-photo" src={service.image} alt="" />
+                <span className="service-number">{service.number}</span>
+                <span className="service-icon" aria-hidden="true">{service.icon}</span>
+              </div>
+
+              <h3>{service.title}</h3>
+
+              <p>{service.text}</p>
+
+              <button
+                className="service-link"
+                onClick={() => scrollTo('contact')}
+              >
+                ASK ABOUT THIS SERVICE <span>↗</span>
+              </button>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <section className="process" id="how-it-works"><div className="process-inner"><div><p className="eyebrow">SIMPLE FROM START TO FINISH</p><h2>Skip the shop.<br />Keep your day.</h2><p>Tell us what’s going on. We’ll confirm the job, come to you, and get you back on the road with no surprises.</p><a className="button button-light" href="#contact">Get a quote <span>→</span></a></div><ol><li><strong>01</strong><span>Tell us about your car and where you need us.</span></li><li><strong>02</strong><span>Get a clear quote and appointment window.</span></li><li><strong>03</strong><span>We handle the repair while you get on with life.</span></li></ol></div></section>
+      {/* HOW IT WORKS */}
 
-      <section className="contact section" id="contact"><div className="contact-intro"><p className="eyebrow">LET’S GET YOU MOVING</p><h2>Need a mechanic?</h2><p>Send a quick note with your vehicle and the issue. We’ll get back to you as soon as possible.</p><div className="contact-details"><a href={`tel:5558675309`}>{phone}</a><a href="mailto:hello@roadreadymechanic.com">hello@roadreadymechanic.com</a><span>Mon–Sat · 8am–6pm</span></div></div><form onSubmit={submit}>{sent ? <div className="success"><span>✓</span><h3>Thanks — we got it!</h3><p>We’ll be in touch shortly to confirm your service.</p><button type="button" onClick={() => setSent(false)}>Send another request</button></div> : <><label>Your name<input required placeholder="Jane Smith" /></label><label>Phone number<input required type="tel" placeholder="(555) 000-0000" /></label><label>What can we help with?<textarea required placeholder="Vehicle year/make/model and a short description of the issue"></textarea></label><button className="button button-primary" type="submit">Send request <span>→</span></button></>}</form></section>
+      <section className="process" id="how-it-works">
+        <div className="process-inner">
+          <div className="process-copy">
+            <p className="eyebrow">STRAIGHTFORWARD FROM START TO FINISH</p>
 
-      <footer><a className="logo" href="#top"><span className="logo-mark">R</span><span>ROAD READY<small>MOBILE MECHANIC</small></span></a><p>Reliable auto care, wherever you are.</p><span>© {new Date().getFullYear()} Road Ready Mobile Mechanic</span></footer>
+            <h2>
+              LESS HASSLE.
+              <br />
+              <span>MORE WRENCHING.</span>
+            </h2>
+
+            <p>
+              Tell us what's going on with your vehicle.
+              We'll discuss the job, establish the price,
+              and arrange a time to come to you.
+            </p>
+
+            <a
+              className="button button-light"
+              href="#contact"
+            >
+              GET A QUOTE <span>→</span>
+            </a>
+          </div>
+
+          <ol className="process-list">
+            <li>
+              <strong>01</strong>
+
+              <div>
+                <h3>Tell us the problem.</h3>
+
+                <p>
+                  Describe your vehicle, the symptoms,
+                  and where the work needs to happen.
+                </p>
+              </div>
+            </li>
+
+            <li>
+              <strong>02</strong>
+
+              <div>
+                <h3>Get a clear estimate.</h3>
+
+                <p>
+                  We'll discuss the repair, parts,
+                  pricing, and appointment details.
+                </p>
+              </div>
+            </li>
+
+            <li>
+              <strong>03</strong>
+
+              <div>
+                <h3>We come to you.</h3>
+
+                <p>
+                  Get the agreed-upon work done at
+                  your location whenever the job is suitable
+                  for mobile service.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+
+      <section className="contact section" id="contact">
+        <div className="contact-intro">
+          <p className="eyebrow">LET'S GET YOU MOVING</p>
+
+          <h2>
+            GOT A PROBLEM?
+            <br />
+            <span>LET'S FIX IT.</span>
+          </h2>
+
+          <p>
+            Tell us what you're driving and what's going
+            wrong. We'll get back to you to discuss the
+            repair and next steps.
+          </p>
+
+          <div className="contact-details">
+            <div className="contact-detail">
+              <span className="detail-label">CALL OR TEXT</span>
+
+              <a href={PHONE_LINK}>{PHONE}</a>
+            </div>
+
+            <div className="contact-detail">
+              <span className="detail-label">SERVICE AREA</span>
+
+              <span>Waynesboro and surrounding areas</span>
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          {succeeded ? (
+            <div className="success">
+              <span className="success-icon">✓</span>
+
+              <h3>Thanks for reaching out.</h3>
+
+              <p>
+                Your service request was sent. We’ll get back to you as soon as we can.
+              </p>
+
+              <a className="button button-primary" href={PHONE_LINK}>
+                CALL {PHONE} <span>↗</span>
+              </a>
+
+              <button
+                type="button"
+                className="send-another"
+                onClick={reset}
+              >
+                Start another request
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="form-heading">
+                <span>01 / SERVICE REQUEST</span>
+
+                <p>Tell us a little about the job.</p>
+              </div>
+
+              <label>
+                YOUR NAME
+
+                <input
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Your name"
+                  required
+                />
+              </label>
+
+              <label>
+                PHONE NUMBER
+
+                <input
+                  name="phone"
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder="Your best contact number"
+                  required
+                />
+              </label>
+
+              <label>
+                VEHICLE & PROBLEM
+
+                <textarea
+                  name="message"
+                  placeholder="Year, make, model, and what's happening..."
+                  required
+                />
+              </label>
+
+              {errors && (
+                <p className="form-error" role="alert">
+                  {errors.getFormErrors().map((error) => error.message).join(' ') ||
+                    'We couldn’t send your request. Please check the details and try again.'}
+                </p>
+              )}
+
+              <button
+                className="button button-primary submit-button"
+                type="submit"
+                disabled={submitting || !import.meta.env.VITE_FORMSPREE_FORM_ID}
+              >
+                {submitting ? 'SENDING…' : 'REQUEST A CALLBACK'} <span>→</span>
+              </button>
+
+              <p className="form-note">
+                {!import.meta.env.VITE_FORMSPREE_FORM_ID
+                  ? 'Form setup is almost complete. Add your Formspree form ID to .env.local to enable requests.'
+                  : `Your request will be sent securely. Need help sooner? Call or text ${PHONE}.`}
+              </p>
+            </>
+          )}
+        </form>
+      </section>
+
+      {/* FOOTER */}
+
+      <footer>
+        <a
+          className="logo footer-logo"
+          href="#top"
+          aria-label="WrenchWorx home"
+        >
+          <img
+            src={assetUrl('wrenchworx-logo.png')}
+            alt="WrenchWorx Mobile Mechanic"
+            className="logo-image"
+          />
+        </a>
+
+        <p>
+          If it has moving parts that no longer move,
+          give me a call.
+        </p>
+
+        <div className="footer-contact">
+          <a href={PHONE_LINK}>{PHONE}</a>
+
+          <span>
+            © {new Date().getFullYear()} WrenchWorx
+          </span>
+        </div>
+      </footer>
     </main>
   )
 }
 
 export default App
-
