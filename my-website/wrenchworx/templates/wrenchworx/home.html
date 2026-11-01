@@ -53,12 +53,12 @@
         </div>
       </section>
 
-      <section class="gallery section" id="gallery" aria-labelledby="gallery-title">
-        <div class="section-heading gallery-heading">
-          <div><p class="eyebrow">WORK FROM THE FIELD</p><h2 id="gallery-title">A CLOSER LOOK.<br><span>REAL WRENCHING.</span></h2></div>
-          <p class="section-description">A few snapshots from the jobs, repairs, and roadside problem-solving that keep our neighbors moving.</p>
-        </div>
-        {% if gallery_photos %}
+      {% if gallery_photos %}
+        <section class="gallery section" id="gallery" aria-labelledby="gallery-title">
+          <div class="section-heading gallery-heading">
+            <div><p class="eyebrow">WORK FROM THE FIELD</p><h2 id="gallery-title">A CLOSER LOOK.<br><span>REAL WRENCHING.</span></h2></div>
+            <p class="section-description">A few snapshots from the jobs, repairs, and roadside problem-solving that keep our neighbors moving.</p>
+          </div>
           <div class="gallery-grid">
             {% for photo in gallery_photos %}
               <figure class="gallery-card{% if forloop.first %} gallery-card-featured{% endif %}">
@@ -70,14 +70,8 @@
               </figure>
             {% endfor %}
           </div>
-        {% else %}
-          <div class="gallery-empty">
-            <span class="gallery-empty-mark" aria-hidden="true">W</span>
-            <div><strong>On the job. Out in the field.</strong><p>Photos from recent work will appear here soon.</p></div>
-            <span class="gallery-empty-tag">WRENCHWORX / FIELD NOTES</span>
-          </div>
-        {% endif %}
-      </section>
+        </section>
+      {% endif %}
 
       <section class="process" id="how-it-works"><div class="process-inner">
         <div class="process-copy"><p class="eyebrow">STRAIGHTFORWARD FROM START TO FINISH</p><h2>LESS HASSLE.<br><span>MORE WRENCHING.</span></h2><p>Tell us what's going on with your vehicle. We'll discuss the job, establish the price, and arrange a time to come to you.</p><a class="button button-light" href="#contact">GET A QUOTE <span>→</span></a></div>
