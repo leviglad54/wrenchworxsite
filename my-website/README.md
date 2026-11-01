@@ -35,6 +35,10 @@ For local setup, copy `.env.example` to `.env` and fill in your Twilio values. U
 
 Connect the GitHub repository to Vercel and set the project Root Directory to `my-website`. Pushes to `main` deploy through Vercel.
 
-Set `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_DEBUG=false`, `DATABASE_URL`, and `DATABASE_URL_UNPOOLED` in Vercel’s Production environment. Use the Neon pooled URL for runtime `DATABASE_URL`; Vercel’s production build hook uses the unpooled URL to run `python manage.py migrate --noinput` before deployment. Preview builds skip migrations.
+Set `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_DEBUG=false`, `PUBLIC_SITE_URL`, `DATABASE_URL`, and `DATABASE_URL_UNPOOLED` in Vercel’s Production environment. `PUBLIC_SITE_URL` should be the preferred public HTTPS domain; it is used for canonical metadata, structured data, and the sitemap. Use the Neon pooled URL for runtime `DATABASE_URL`; Vercel’s production build hook uses the unpooled URL to run `python manage.py migrate --noinput` before deployment. Preview builds skip migrations.
 
 Create the production administrator account against the Neon database after deployment by running `python manage.py createsuperuser` with the production database URL configured. Vercel’s function filesystem is temporary, so configure durable external media storage before relying on admin photo uploads in production. Add the Twilio environment variables only if you want SMS notifications enabled.
+
+## Search engine discovery
+
+The public homepage includes canonical and social metadata plus LocalBusiness structured data. `/robots.txt` points crawlers to `/sitemap.xml`, which lists the canonical homepage. After deployment, submit `https://<your-domain>/sitemap.xml` in Google Search Console and verify the preferred domain there.

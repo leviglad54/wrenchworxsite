@@ -14,6 +14,9 @@ if local_env.exists():
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "development-only-change-me")
 DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
+PUBLIC_SITE_URL = os.environ.get(
+    "PUBLIC_SITE_URL", "https://wrenchworxmobile.com"
+).rstrip("/")
 ALLOWED_HOSTS = [host.strip() for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if host.strip()]
 # Keep Vercel's generated deployment URLs reachable even when a custom host
 # list is configured in the project environment.
@@ -47,6 +50,7 @@ TEMPLATES = [{
         "django.template.context_processors.request",
         "django.contrib.auth.context_processors.auth",
         "django.contrib.messages.context_processors.messages",
+        "wrenchworx.seo.public_site_context",
     ]},
 }]
 WSGI_APPLICATION = "wrenchworx_project.wsgi.application"
