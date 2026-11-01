@@ -740,8 +740,10 @@ a:visited {
   #user-tools {
     position: relative;
     float: none;
+    display: flex;
+    align-items: center;
     max-width: none;
-    margin: 0;
+    margin: 0 0 0 auto;
     font-size: 10px;
     line-height: normal;
     text-align: right;
