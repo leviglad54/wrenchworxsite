@@ -1,0 +1,114 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'wrenchworx/wrenchworx-logo.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional mobile mechanic service in Waynesboro, PA. Diagnostics, maintenance, and mechanical repairs at your home or workplace.">
+    <meta name="theme-color" content="#171819">
+    <title>WrenchWorx | Mobile Mechanic in Waynesboro, PA</title>
+    <link rel="stylesheet" href="{% static 'wrenchworx/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'wrenchworx/css/app.css' %}">
+  </head>
+  <body>
+    <main style="--process-bg-image: url('{% static 'wrenchworx/assets/process-background.png' %}')">
+      <header class="site-header" id="top">
+        <a class="logo" href="#top" aria-label="WrenchWorx home">
+          <img src="{% static 'wrenchworx/wrenchworx-logo.png' %}" alt="WrenchWorx Mobile Mechanic" class="logo-image">
+        </a>
+        <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+        <nav>
+          <button type="button" data-scroll-to="services">Services</button>
+          <button type="button" data-scroll-to="how-it-works">How It Works</button>
+          <button type="button" data-scroll-to="contact">Contact</button>
+          <a class="nav-phone" href="tel:+17173312590">Call Now <span>↗</span></a>
+        </nav>
+      </header>
+
+      <section class="hero" id="home">
+        <div class="hero-copy">
+          <p class="eyebrow">MOBILE AUTO REPAIR <span class="eyebrow-divider">///</span> WAYNESBORO, PA</p>
+          <h1>YOUR DRIVEWAY.<br><em>OUR WORKSHOP.</em></h1>
+          <p class="lede">Professional mechanical repairs and practical troubleshooting, brought directly to you. No shop waiting room. No unnecessary runaround.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#contact">REQUEST SERVICE <span>→</span></a>
+            <a class="text-link" href="tel:+17173312590"><span class="phone-symbol">☎</span>(717) 331-2590</a>
+          </div>
+          <div class="trust"><span><b>+</b> On-site repairs</span><span><b>+</b> Straightforward pricing</span><span><b>+</b> Practical expertise</span></div>
+        </div>
+        <div class="hero-art" aria-label="Distressed steel gear, crossed wrenches, and piston artwork">
+          <img class="hero-illustration" src="{% static 'wrenchworx/assets/hero-workshop.png' %}" alt="">
+        </div>
+        <div class="hero-bottom-line"><span>WRENCHWORX MOBILE MECHANIC</span><span>BUILT AROUND THE WAY YOU WORK.</span></div>
+      </section>
+
+      <section class="services section" id="services">
+        <div class="section-heading"><div><p class="eyebrow">WHAT WE DO</p><h2>REAL REPAIRS.<br><span>NO RUNAROUND.</span></h2></div><p class="section-description">From finding the problem to fixing it, get practical mechanical help where you need it.</p></div>
+        <div class="service-grid">
+          <article class="service"><div class="service-image" role="img" aria-label="Diagnostics service photo"><img class="service-photo" src="{% static 'wrenchworx/assets/service-diagnostics.png' %}" alt=""><span class="service-number">01</span><span class="service-icon" aria-hidden="true">⌕</span></div><h3>Diagnostics</h3><p>No-starts, check-engine lights, electrical problems, and mechanical troubleshooting.</p><button class="service-link" type="button" data-scroll-to="contact">ASK ABOUT THIS SERVICE <span>↗</span></button></article>
+          <article class="service"><div class="service-image" role="img" aria-label="Maintenance service photo"><img class="service-photo" src="{% static 'wrenchworx/assets/service-maintenance.png' %}" alt=""><span class="service-number">02</span><span class="service-icon" aria-hidden="true">⚙</span></div><h3>Maintenance</h3><p>Oil changes, brakes, batteries, fluids, filters, and routine vehicle maintenance.</p><button class="service-link" type="button" data-scroll-to="contact">ASK ABOUT THIS SERVICE <span>↗</span></button></article>
+          <article class="service"><div class="service-image" role="img" aria-label="Mechanical Repairs service photo"><img class="service-photo" src="{% static 'wrenchworx/assets/service-repairs.png' %}" alt=""><span class="service-number">03</span><span class="service-icon" aria-hidden="true">🔧</span></div><h3>Mechanical Repairs</h3><p>Practical repair solutions for the problems keeping your vehicle off the road.</p><button class="service-link" type="button" data-scroll-to="contact">ASK ABOUT THIS SERVICE <span>↗</span></button></article>
+          <article class="service"><div class="service-image" role="img" aria-label="Mobile Service service photo"><img class="service-photo" src="{% static 'wrenchworx/assets/service-mobile-service.png' %}" alt=""><span class="service-number">04</span><span class="service-icon" aria-hidden="true">⌁</span></div><h3>Mobile Service</h3><p>Convenient repairs at your home, workplace, or another suitable location.</p><button class="service-link" type="button" data-scroll-to="contact">ASK ABOUT THIS SERVICE <span>↗</span></button></article>
+        </div>
+      </section>
+
+      <section class="gallery section" id="gallery" aria-labelledby="gallery-title">
+        <div class="section-heading gallery-heading">
+          <div><p class="eyebrow">WORK FROM THE FIELD</p><h2 id="gallery-title">A CLOSER LOOK.<br><span>REAL WRENCHING.</span></h2></div>
+          <p class="section-description">A few snapshots from the jobs, repairs, and roadside problem-solving that keep our neighbors moving.</p>
+        </div>
+        {% if gallery_photos %}
+          <div class="gallery-grid">
+            {% for photo in gallery_photos %}
+              <figure class="gallery-card{% if forloop.first %} gallery-card-featured{% endif %}">
+                <div class="gallery-image-wrap">
+                  <img src="{{ photo.image.url }}" alt="{{ photo.alt_text|default:photo.caption }}" loading="lazy">
+                  <span class="gallery-index">{{ forloop.counter|stringformat:"02d" }}</span>
+                </div>
+                <figcaption><span>{{ photo.caption }}</span><span aria-hidden="true">↗</span></figcaption>
+              </figure>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="gallery-empty">
+            <span class="gallery-empty-mark" aria-hidden="true">W</span>
+            <div><strong>On the job. Out in the field.</strong><p>Photos from recent work will appear here soon.</p></div>
+            <span class="gallery-empty-tag">WRENCHWORX / FIELD NOTES</span>
+          </div>
+        {% endif %}
+      </section>
+
+      <section class="process" id="how-it-works"><div class="process-inner">
+        <div class="process-copy"><p class="eyebrow">STRAIGHTFORWARD FROM START TO FINISH</p><h2>LESS HASSLE.<br><span>MORE WRENCHING.</span></h2><p>Tell us what's going on with your vehicle. We'll discuss the job, establish the price, and arrange a time to come to you.</p><a class="button button-light" href="#contact">GET A QUOTE <span>→</span></a></div>
+        <ol class="process-list">
+          <li><strong>01</strong><div><h3>Tell us the problem.</h3><p>Describe your vehicle, the symptoms, and where the work needs to happen.</p></div></li>
+          <li><strong>02</strong><div><h3>Get a clear estimate.</h3><p>We'll discuss the repair, parts, pricing, and appointment details.</p></div></li>
+          <li><strong>03</strong><div><h3>We come to you.</h3><p>Get the agreed-upon work done at your location whenever the job is suitable for mobile service.</p></div></li>
+        </ol>
+      </div></section>
+
+      <section class="contact section" id="contact">
+        <div class="contact-intro"><p class="eyebrow">LET'S GET YOU MOVING</p><h2>GOT A PROBLEM?<br><span>LET'S FIX IT.</span></h2><p>Tell us what you're driving and what's going wrong. We'll get back to you to discuss the repair and next steps.</p>
+          <div class="contact-details"><div class="contact-detail"><span class="detail-label">CALL OR TEXT</span><a href="tel:+17173312590">(717) 331-2590</a></div><div class="contact-detail"><span class="detail-label">SERVICE AREA</span><span>Waynesboro and surrounding areas</span></div></div>
+        </div>
+        <form data-submit-url="{% url 'service_request' %}" novalidate>
+          {% csrf_token %}
+          <div class="success" hidden><span class="success-icon">✓</span><h3>Thanks for reaching out.</h3><p>Your service request was sent. We’ll get back to you as soon as we can.</p><a class="button button-primary" href="tel:+17173312590">CALL (717) 331-2590 <span>↗</span></a><button type="button" class="send-another">Start another request</button></div>
+          <div class="request-fields">
+            <div class="form-heading"><span>01 / SERVICE REQUEST</span><p>Tell us a little about the job.</p></div>
+            <label>YOUR NAME<input name="name" type="text" autocomplete="name" placeholder="Your name" required></label>
+            <label>PHONE NUMBER<input name="phone" type="tel" autocomplete="tel" placeholder="Your best contact number" required></label>
+            <label>VEHICLE &amp; PROBLEM<textarea name="message" placeholder="Year, make, model, and what's happening..." required></textarea></label>
+            <p class="form-error" role="alert" hidden></p>
+            <button class="button button-primary submit-button" type="submit">REQUEST A CALLBACK <span>→</span></button>
+            <p class="form-note">Your request will be sent securely. Need help sooner? Call or text (717) 331-2590.</p>
+          </div>
+        </form>
+      </section>
+
+      <footer><a class="logo footer-logo" href="#top" aria-label="WrenchWorx home"><img src="{% static 'wrenchworx/wrenchworx-logo.png' %}" alt="WrenchWorx Mobile Mechanic" class="logo-image"></a><p>If it has moving parts that no longer move, give me a call.</p><div class="footer-contact"><a href="tel:+17173312590">(717) 331-2590</a><span>© {% now "Y" %} WrenchWorx</span></div></footer>
+    </main>
+    <script src="{% static 'wrenchworx/js/site.js' %}" defer></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | WrenchWorx Service Manager{% endblock %}
+{% block dark-mode-vars %}
+  <link rel="stylesheet" href="{% static 'admin/css/dark_mode.css' %}">
+  <script>document.documentElement.dataset.theme = "auto"; try { localStorage.removeItem("theme"); } catch (error) {}</script>
+{% endblock %}
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'wrenchworx/css/admin.css' %}?v=3">
+{% endblock %}
+{% block branding %}
+  <div id="site-name" class="wrenchworx-brand">
+    <a href="{% url 'admin:index' %}" aria-label="WrenchWorx dashboard">
+      <span class="brand-mark" aria-hidden="true">W</span>
+      <span class="brand-copy"><strong>WRENCHWORX</strong><small>SERVICE MANAGER</small></span>
+    </a>
+  </div>
+{% endblock %}
+{% block userlinks %}
+  {% if site_url %}<a href="{{ site_url }}">View site</a> / {% endif %}
+  {% if user.is_active and user.is_staff %}
+    {% url 'django-admindocs-docroot' as docsroot %}
+    {% if docsroot %}<a href="{{ docsroot }}">Documentation</a> / {% endif %}
+  {% endif %}
+  {% if user.has_usable_password %}<a href="{% url 'admin:password_change' %}">Change password</a> / {% endif %}
+  <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+    {% csrf_token %}
+    <button type="submit">Log out</button>
+  </form>
+{% endblock %}
