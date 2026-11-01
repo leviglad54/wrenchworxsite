@@ -1,5 +1,5 @@
 {% extends "admin/base.html" %}
-{% load static %}
+{% load static i18n %}
 
 {% block title %}{{ title }} | WrenchWorx Service Manager{% endblock %}
 {% block dark-mode-vars %}
@@ -8,7 +8,7 @@
 {% endblock %}
 {% block extrastyle %}
   {{ block.super }}
-  <link rel="stylesheet" href="{% static 'wrenchworx/css/admin.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'wrenchworx/css/admin.css' %}?v=4">
 {% endblock %}
 {% block branding %}
   <div id="site-name" class="wrenchworx-brand">
@@ -18,15 +18,36 @@
     </a>
   </div>
 {% endblock %}
+{% block welcome-msg %}
+  <span class="ww-welcome-msg">{% translate "Welcome," %} <strong>{% firstof user.get_short_name user.get_username %}</strong>.</span>
+{% endblock %}
 {% block userlinks %}
-  {% if site_url %}<a href="{{ site_url }}">View site</a> / {% endif %}
-  {% if user.is_active and user.is_staff %}
-    {% url 'django-admindocs-docroot' as docsroot %}
-    {% if docsroot %}<a href="{{ docsroot }}">Documentation</a> / {% endif %}
-  {% endif %}
-  {% if user.has_usable_password %}<a href="{% url 'admin:password_change' %}">Change password</a> / {% endif %}
-  <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
-    {% csrf_token %}
-    <button type="submit">Log out</button>
-  </form>
+  <div class="ww-userlinks-desktop">
+    {% if site_url %}<a href="{{ site_url }}">View site</a> / {% endif %}
+    {% if user.is_active and user.is_staff %}
+      {% url 'django-admindocs-docroot' as docsroot %}
+      {% if docsroot %}<a href="{{ docsroot }}">Documentation</a> / {% endif %}
+    {% endif %}
+    {% if user.has_usable_password %}<a href="{% url 'admin:password_change' %}">Change password</a> / {% endif %}
+    <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+      {% csrf_token %}
+      <button type="submit">Log out</button>
+    </form>
+  </div>
+  <details class="ww-account-menu">
+    <summary><span>Menu</span><span class="ww-menu-chevron" aria-hidden="true">⌄</span></summary>
+    <div class="ww-account-menu-panel">
+      <p class="ww-account-menu-greeting">{% translate "Welcome," %} <strong>{% firstof user.get_short_name user.get_username %}</strong>.</p>
+      {% if site_url %}<a href="{{ site_url }}">View site</a>{% endif %}
+      {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}<a href="{{ docsroot }}">Documentation</a>{% endif %}
+      {% endif %}
+      {% if user.has_usable_password %}<a href="{% url 'admin:password_change' %}">Change password</a>{% endif %}
+      <form class="ww-account-logout" method="post" action="{% url 'admin:logout' %}">
+        {% csrf_token %}
+        <button type="submit">Log out</button>
+      </form>
+    </div>
+  </details>
 {% endblock %}

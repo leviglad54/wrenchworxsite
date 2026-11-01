@@ -13,14 +13,23 @@ class WrenchWorxAdminSite(admin.AdminSite):
     def index(self, request, extra_context=None):
         requests = ServiceRequest.objects.all()
         dashboard_context = {
-            "new_request_count": requests.filter(status=ServiceRequest.Status.NEW).count(),
-            "scheduled_request_count": requests.filter(status=ServiceRequest.Status.SCHEDULED).count(),
+            "new_request_count": requests.filter(
+                status=ServiceRequest.Status.NEW
+            ).count(),
+            "scheduled_request_count": requests.filter(
+                status=ServiceRequest.Status.SCHEDULED
+            ).count(),
             "open_request_count": requests.exclude(
-                status__in=(ServiceRequest.Status.COMPLETED, ServiceRequest.Status.DECLINED)
+                status__in=(
+                    ServiceRequest.Status.COMPLETED,
+                    ServiceRequest.Status.DECLINED,
+                )
             ).count(),
             "active_service_count": Service.objects.filter(active=True).count(),
             "active_area_count": ServiceArea.objects.filter(active=True).count(),
-            "published_gallery_photo_count": GalleryPhoto.objects.filter(is_published=True).count(),
+            "published_gallery_photo_count": GalleryPhoto.objects.filter(
+                is_published=True
+            ).count(),
             "recent_requests": requests[:6],
         }
         dashboard_context.update(extra_context or {})
@@ -39,9 +48,9 @@ class ServiceRequestAdmin(admin.ModelAdmin):
     list_editable = ("status",)
     date_hierarchy = "created_at"
     fieldsets = (
-        ("Customer", {"fields": ("name", "phone", "vehicle_problem")} ),
-        ("Follow-up", {"fields": ("status", "preferred_time", "internal_notes")} ),
-        ("Timestamps", {"fields": ("created_at", "updated_at")} ),
+        ("Customer", {"fields": ("name", "phone", "vehicle_problem")}),
+        ("Follow-up", {"fields": ("status", "preferred_time", "internal_notes")}),
+        ("Timestamps", {"fields": ("created_at", "updated_at")}),
     )
 
 
@@ -70,17 +79,34 @@ class BusinessProfileAdmin(admin.ModelAdmin):
 
 @admin.register(GalleryPhoto, site=admin_site)
 class GalleryPhotoAdmin(admin.ModelAdmin):
-    list_display = ("photo_preview", "caption", "display_order", "is_published", "created_at")
+    list_display = (
+        "photo_preview",
+        "caption",
+        "display_order",
+        "is_published",
+        "created_at",
+    )
     list_display_links = ("photo_preview", "caption")
     list_editable = ("display_order", "is_published")
     list_filter = ("is_published", "created_at")
     search_fields = ("caption", "alt_text")
     readonly_fields = ("photo_preview", "created_at")
-    fields = ("caption", "image", "alt_text", "display_order", "is_published", "photo_preview", "created_at")
+    fields = (
+        "caption",
+        "image",
+        "alt_text",
+        "display_order",
+        "is_published",
+        "photo_preview",
+        "created_at",
+    )
     ordering = ("display_order", "-created_at")
 
     @admin.display(description="Preview")
     def photo_preview(self, obj):
         if not obj or not obj.image:
             return "Choose a photo to see a preview."
-        return format_html('<img src="{}" alt="" style="max-width: 240px; max-height: 150px; object-fit: cover; border-radius: 3px;">', obj.image.url)
+        return format_html(
+            '<img src="{}" alt="" style="max-width: 240px; max-height: 150px; object-fit: cover; border-radius: 3px;">',
+            obj.image.url,
+        )

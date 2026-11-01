@@ -7,65 +7,122 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='BusinessProfile',
+            name="BusinessProfile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('business_name', models.CharField(default='WrenchWorx', max_length=120)),
-                ('phone', models.CharField(default='(717) 331-2590', max_length=40)),
-                ('email', models.EmailField(blank=True, max_length=254)),
-                ('service_area_summary', models.CharField(default='Waynesboro and surrounding areas', max_length=200)),
-                ('hours', models.CharField(blank=True, max_length=200)),
-                ('booking_notes', models.TextField(blank=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "business_name",
+                    models.CharField(default="WrenchWorx", max_length=120),
+                ),
+                ("phone", models.CharField(default="(717) 331-2590", max_length=40)),
+                ("email", models.EmailField(blank=True, max_length=254)),
+                (
+                    "service_area_summary",
+                    models.CharField(
+                        default="Waynesboro and surrounding areas", max_length=200
+                    ),
+                ),
+                ("hours", models.CharField(blank=True, max_length=200)),
+                ("booking_notes", models.TextField(blank=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Service',
+            name="Service",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('description', models.TextField()),
-                ('starting_price', models.DecimalField(blank=True, decimal_places=2, max_digits=8, null=True)),
-                ('active', models.BooleanField(default=True)),
-                ('display_order', models.PositiveSmallIntegerField(default=0)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("description", models.TextField()),
+                (
+                    "starting_price",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=8, null=True
+                    ),
+                ),
+                ("active", models.BooleanField(default=True)),
+                ("display_order", models.PositiveSmallIntegerField(default=0)),
             ],
             options={
-                'ordering': ['display_order', 'name'],
+                "ordering": ["display_order", "name"],
             },
         ),
         migrations.CreateModel(
-            name='ServiceArea',
+            name="ServiceArea",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('town', models.CharField(max_length=100)),
-                ('region', models.CharField(blank=True, max_length=100)),
-                ('active', models.BooleanField(default=True)),
-                ('notes', models.CharField(blank=True, max_length=240)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("town", models.CharField(max_length=100)),
+                ("region", models.CharField(blank=True, max_length=100)),
+                ("active", models.BooleanField(default=True)),
+                ("notes", models.CharField(blank=True, max_length=240)),
             ],
             options={
-                'ordering': ['town', 'region'],
+                "ordering": ["town", "region"],
             },
         ),
         migrations.CreateModel(
-            name='ServiceRequest',
+            name="ServiceRequest",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=120)),
-                ('phone', models.CharField(max_length=40)),
-                ('vehicle_problem', models.TextField()),
-                ('status', models.CharField(choices=[('new', 'New'), ('contacted', 'Contacted'), ('scheduled', 'Scheduled'), ('completed', 'Completed'), ('declined', 'Declined')], default='new', max_length=20)),
-                ('preferred_time', models.DateTimeField(blank=True, null=True)),
-                ('internal_notes', models.TextField(blank=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=120)),
+                ("phone", models.CharField(max_length=40)),
+                ("vehicle_problem", models.TextField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("new", "New"),
+                            ("contacted", "Contacted"),
+                            ("scheduled", "Scheduled"),
+                            ("completed", "Completed"),
+                            ("declined", "Declined"),
+                        ],
+                        default="new",
+                        max_length=20,
+                    ),
+                ),
+                ("preferred_time", models.DateTimeField(blank=True, null=True)),
+                ("internal_notes", models.TextField(blank=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
             ],
             options={
-                'verbose_name': 'service request',
-                'ordering': ['-created_at'],
+                "verbose_name": "service request",
+                "ordering": ["-created_at"],
             },
         ),
     ]

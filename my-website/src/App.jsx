@@ -1,73 +1,75 @@
-import { useState } from 'react'
-import { useForm } from '@formspree/react'
-import './App.css'
+import { useState } from "react";
+import { useForm } from "@formspree/react";
+import "./App.css";
 
-const PHONE = '(717) 331-2590'
-const PHONE_LINK = 'tel:+17173312590'
-const FORMSPREE_FORM_ID = import.meta.env.VITE_FORMSPREE_FORM_ID || 'configure-form-id'
-const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`
+const PHONE = "(717) 331-2590";
+const PHONE_LINK = "tel:+17173312590";
+const FORMSPREE_FORM_ID =
+  import.meta.env.VITE_FORMSPREE_FORM_ID || "configure-form-id";
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path}`;
 
 const services = [
   {
-    number: '01',
-    image: assetUrl('assets/service-diagnostics.png'),
-    icon: '⌕',
-    title: 'Diagnostics',
-    text: 'No-starts, check-engine lights, electrical problems, and mechanical troubleshooting.',
+    number: "01",
+    image: assetUrl("assets/service-diagnostics.png"),
+    icon: "⌕",
+    title: "Diagnostics",
+    text: "No-starts, check-engine lights, electrical problems, and mechanical troubleshooting.",
   },
   {
-    number: '02',
-    image: assetUrl('assets/service-maintenance.png'),
-    icon: '⚙',
-    title: 'Maintenance',
-    text: 'Oil changes, brakes, batteries, fluids, filters, and routine vehicle maintenance.',
+    number: "02",
+    image: assetUrl("assets/service-maintenance.png"),
+    icon: "⚙",
+    title: "Maintenance",
+    text: "Oil changes, brakes, batteries, fluids, filters, and routine vehicle maintenance.",
   },
   {
-    number: '03',
-    image: assetUrl('assets/service-repairs.png'),
-    icon: '🔧',
-    title: 'Mechanical Repairs',
-    text: 'Practical repair solutions for the problems keeping your vehicle off the road.',
+    number: "03",
+    image: assetUrl("assets/service-repairs.png"),
+    icon: "🔧",
+    title: "Mechanical Repairs",
+    text: "Practical repair solutions for the problems keeping your vehicle off the road.",
   },
   {
-    number: '04',
-    image: assetUrl('assets/service-mobile-service.png'),
-    icon: '⌁',
-    title: 'Mobile Service',
-    text: 'Convenient repairs at your home, workplace, or another suitable location.',
+    number: "04",
+    image: assetUrl("assets/service-mobile-service.png"),
+    icon: "⌁",
+    title: "Mobile Service",
+    text: "Convenient repairs at your home, workplace, or another suitable location.",
   },
-]
+];
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [{ errors, submitting, succeeded }, handleSubmit, reset] = useForm(FORMSPREE_FORM_ID)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [{ errors, submitting, succeeded }, handleSubmit, reset] =
+    useForm(FORMSPREE_FORM_ID);
 
   const nav = [
-    { label: 'Services', id: 'services' },
-    { label: 'How It Works', id: 'how-it-works' },
-    { label: 'Contact', id: 'contact' },
-  ]
+    { label: "Services", id: "services" },
+    { label: "How It Works", id: "how-it-works" },
+    { label: "Contact", id: "contact" },
+  ];
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({
-      behavior: 'smooth',
-    })
+      behavior: "smooth",
+    });
 
-    setMenuOpen(false)
-  }
+    setMenuOpen(false);
+  };
 
   return (
-    <main style={{ '--process-bg-image': `url("${assetUrl('assets/process-background.png')}")` }}>
+    <main
+      style={{
+        "--process-bg-image": `url("${assetUrl("assets/process-background.png")}")`,
+      }}
+    >
       {/* HEADER */}
 
       <header className="site-header" id="top">
-        <a
-          className="logo"
-          href="#top"
-          aria-label="WrenchWorx home"
-        >
+        <a className="logo" href="#top" aria-label="WrenchWorx home">
           <img
-            src={assetUrl('wrenchworx-logo.png')}
+            src={assetUrl("wrenchworx-logo.png")}
             alt="WrenchWorx Mobile Mechanic"
             className="logo-image"
           />
@@ -76,18 +78,15 @@ function App() {
         <button
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
         >
-          {menuOpen ? '✕' : '☰'}
+          {menuOpen ? "✕" : "☰"}
         </button>
 
-        <nav className={menuOpen ? 'open' : ''}>
+        <nav className={menuOpen ? "open" : ""}>
           {nav.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-            >
+            <button key={item.id} onClick={() => scrollTo(item.id)}>
               {item.label}
             </button>
           ))}
@@ -115,16 +114,13 @@ function App() {
           </h1>
 
           <p className="lede">
-            Professional mechanical repairs and practical
-            troubleshooting, brought directly to you.
-            No shop waiting room. No unnecessary runaround.
+            Professional mechanical repairs and practical troubleshooting,
+            brought directly to you. No shop waiting room. No unnecessary
+            runaround.
           </p>
 
           <div className="hero-actions">
-            <a
-              className="button button-primary"
-              href="#contact"
-            >
+            <a className="button button-primary" href="#contact">
               REQUEST SERVICE <span>→</span>
             </a>
 
@@ -149,8 +145,15 @@ function App() {
           </div>
         </div>
 
-        <div className="hero-art" aria-label="Distressed steel gear, crossed wrenches, and piston artwork">
-          <img className="hero-illustration" src={assetUrl('assets/hero-workshop.png')} alt="" />
+        <div
+          className="hero-art"
+          aria-label="Distressed steel gear, crossed wrenches, and piston artwork"
+        >
+          <img
+            className="hero-illustration"
+            src={assetUrl("assets/hero-workshop.png")}
+            alt=""
+          />
         </div>
 
         <div className="hero-bottom-line">
@@ -174,17 +177,14 @@ function App() {
           </div>
 
           <p className="section-description">
-            From finding the problem to fixing it, get
-            practical mechanical help where you need it.
+            From finding the problem to fixing it, get practical mechanical help
+            where you need it.
           </p>
         </div>
 
         <div className="service-grid">
           {services.map((service) => (
-            <article
-              className="service"
-              key={service.number}
-            >
+            <article className="service" key={service.number}>
               <div
                 className="service-image"
                 role="img"
@@ -192,7 +192,9 @@ function App() {
               >
                 <img className="service-photo" src={service.image} alt="" />
                 <span className="service-number">{service.number}</span>
-                <span className="service-icon" aria-hidden="true">{service.icon}</span>
+                <span className="service-icon" aria-hidden="true">
+                  {service.icon}
+                </span>
               </div>
 
               <h3>{service.title}</h3>
@@ -201,7 +203,7 @@ function App() {
 
               <button
                 className="service-link"
-                onClick={() => scrollTo('contact')}
+                onClick={() => scrollTo("contact")}
               >
                 ASK ABOUT THIS SERVICE <span>↗</span>
               </button>
@@ -224,15 +226,11 @@ function App() {
             </h2>
 
             <p>
-              Tell us what's going on with your vehicle.
-              We'll discuss the job, establish the price,
-              and arrange a time to come to you.
+              Tell us what's going on with your vehicle. We'll discuss the job,
+              establish the price, and arrange a time to come to you.
             </p>
 
-            <a
-              className="button button-light"
-              href="#contact"
-            >
+            <a className="button button-light" href="#contact">
               GET A QUOTE <span>→</span>
             </a>
           </div>
@@ -245,8 +243,8 @@ function App() {
                 <h3>Tell us the problem.</h3>
 
                 <p>
-                  Describe your vehicle, the symptoms,
-                  and where the work needs to happen.
+                  Describe your vehicle, the symptoms, and where the work needs
+                  to happen.
                 </p>
               </div>
             </li>
@@ -258,8 +256,8 @@ function App() {
                 <h3>Get a clear estimate.</h3>
 
                 <p>
-                  We'll discuss the repair, parts,
-                  pricing, and appointment details.
+                  We'll discuss the repair, parts, pricing, and appointment
+                  details.
                 </p>
               </div>
             </li>
@@ -271,9 +269,8 @@ function App() {
                 <h3>We come to you.</h3>
 
                 <p>
-                  Get the agreed-upon work done at
-                  your location whenever the job is suitable
-                  for mobile service.
+                  Get the agreed-upon work done at your location whenever the
+                  job is suitable for mobile service.
                 </p>
               </div>
             </li>
@@ -294,9 +291,8 @@ function App() {
           </h2>
 
           <p>
-            Tell us what you're driving and what's going
-            wrong. We'll get back to you to discuss the
-            repair and next steps.
+            Tell us what you're driving and what's going wrong. We'll get back
+            to you to discuss the repair and next steps.
           </p>
 
           <div className="contact-details">
@@ -322,18 +318,15 @@ function App() {
               <h3>Thanks for reaching out.</h3>
 
               <p>
-                Your service request was sent. We’ll get back to you as soon as we can.
+                Your service request was sent. We’ll get back to you as soon as
+                we can.
               </p>
 
               <a className="button button-primary" href={PHONE_LINK}>
                 CALL {PHONE} <span>↗</span>
               </a>
 
-              <button
-                type="button"
-                className="send-another"
-                onClick={reset}
-              >
+              <button type="button" className="send-another" onClick={reset}>
                 Start another request
               </button>
             </div>
@@ -347,7 +340,6 @@ function App() {
 
               <label>
                 YOUR NAME
-
                 <input
                   name="name"
                   type="text"
@@ -359,7 +351,6 @@ function App() {
 
               <label>
                 PHONE NUMBER
-
                 <input
                   name="phone"
                   type="tel"
@@ -371,7 +362,6 @@ function App() {
 
               <label>
                 VEHICLE & PROBLEM
-
                 <textarea
                   name="message"
                   placeholder="Year, make, model, and what's happening..."
@@ -381,8 +371,11 @@ function App() {
 
               {errors && (
                 <p className="form-error" role="alert">
-                  {errors.getFormErrors().map((error) => error.message).join(' ') ||
-                    'We couldn’t send your request. Please check the details and try again.'}
+                  {errors
+                    .getFormErrors()
+                    .map((error) => error.message)
+                    .join(" ") ||
+                    "We couldn’t send your request. Please check the details and try again."}
                 </p>
               )}
 
@@ -391,12 +384,12 @@ function App() {
                 type="submit"
                 disabled={submitting || !import.meta.env.VITE_FORMSPREE_FORM_ID}
               >
-                {submitting ? 'SENDING…' : 'REQUEST A CALLBACK'} <span>→</span>
+                {submitting ? "SENDING…" : "REQUEST A CALLBACK"} <span>→</span>
               </button>
 
               <p className="form-note">
                 {!import.meta.env.VITE_FORMSPREE_FORM_ID
-                  ? 'Form setup is almost complete. Add your Formspree form ID to .env.local to enable requests.'
+                  ? "Form setup is almost complete. Add your Formspree form ID to .env.local to enable requests."
                   : `Your request will be sent securely. Need help sooner? Call or text ${PHONE}.`}
               </p>
             </>
@@ -413,27 +406,22 @@ function App() {
           aria-label="WrenchWorx home"
         >
           <img
-            src={assetUrl('wrenchworx-logo.png')}
+            src={assetUrl("wrenchworx-logo.png")}
             alt="WrenchWorx Mobile Mechanic"
             className="logo-image"
           />
         </a>
 
-        <p>
-          If it has moving parts that no longer move,
-          give me a call.
-        </p>
+        <p>If it has moving parts that no longer move, give me a call.</p>
 
         <div className="footer-contact">
           <a href={PHONE_LINK}>{PHONE}</a>
 
-          <span>
-            © {new Date().getFullYear()} WrenchWorx
-          </span>
+          <span>© {new Date().getFullYear()} WrenchWorx</span>
         </div>
       </footer>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;

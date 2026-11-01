@@ -6,25 +6,40 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wrenchworx', '0001_initial'),
+        ("wrenchworx", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='GalleryPhoto',
+            name="GalleryPhoto",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('caption', models.CharField(max_length=160)),
-                ('image', models.ImageField(upload_to='gallery/%Y/%m/')),
-                ('alt_text', models.CharField(blank=True, help_text='Briefly describe the photo for visitors using a screen reader.', max_length=180)),
-                ('display_order', models.PositiveSmallIntegerField(default=0)),
-                ('is_published', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("caption", models.CharField(max_length=160)),
+                ("image", models.ImageField(upload_to="gallery/%Y/%m/")),
+                (
+                    "alt_text",
+                    models.CharField(
+                        blank=True,
+                        help_text="Briefly describe the photo for visitors using a screen reader.",
+                        max_length=180,
+                    ),
+                ),
+                ("display_order", models.PositiveSmallIntegerField(default=0)),
+                ("is_published", models.BooleanField(default=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
             ],
             options={
-                'verbose_name': 'gallery photo',
-                'verbose_name_plural': 'gallery photos',
-                'ordering': ['display_order', '-created_at'],
+                "verbose_name": "gallery photo",
+                "verbose_name_plural": "gallery photos",
+                "ordering": ["display_order", "-created_at"],
             },
         ),
     ]

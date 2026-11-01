@@ -4,75 +4,75 @@
 {% block content_title %}{% endblock %}
 
 {% block content %}
-<div class="dashboard-shell">
-  <section class="dashboard-intro">
-    <div>
-      <p class="dashboard-kicker">WRENCHWORX <span>///</span> WAYNESBORO, PA</p>
-      <h1>Your shop, at a glance.</h1>
-      <p class="dashboard-subtitle">Keep customer requests moving and your mobile service details up to date.</p>
-    </div>
-    {% if perms.wrenchworx.add_servicerequest %}
-      <a class="dashboard-primary" href="{% url 'admin:wrenchworx_servicerequest_add' %}">＋ <span>ADD REQUEST</span></a>
-    {% endif %}
-  </section>
-
-  <section class="metric-grid" aria-label="Business overview">
-    <a class="metric-card metric-card-highlight" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}?status__exact=new">
-      <span class="metric-label">NEW REQUESTS</span>
-      <strong>{{ new_request_count }}</strong>
-      <span class="metric-foot">Needs a first response <i>↗</i></span>
-    </a>
-    <a class="metric-card" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}?status__exact=scheduled">
-      <span class="metric-label">SCHEDULED</span>
-      <strong>{{ scheduled_request_count }}</strong>
-      <span class="metric-foot">Jobs on the calendar <i>↗</i></span>
-    </a>
-    <a class="metric-card" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}">
-      <span class="metric-label">OPEN REQUESTS</span>
-      <strong>{{ open_request_count }}</strong>
-      <span class="metric-foot">Still in progress <i>↗</i></span>
-    </a>
-    <a class="metric-card" href="{% url 'admin:wrenchworx_service_changelist' %}">
-      <span class="metric-label">ACTIVE SERVICES</span>
-      <strong>{{ active_service_count }}</strong>
-      <span class="metric-foot">Shown on your website <i>↗</i></span>
-    </a>
-  </section>
-
-  <div class="dashboard-columns">
-    <section class="dashboard-panel recent-panel">
-      <div class="panel-heading">
-        <div><p class="panel-eyebrow">INCOMING WORK</p><h2>Recent requests</h2></div>
-        <a class="panel-link" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}">ALL REQUESTS <span>↗</span></a>
+  <div class="dashboard-shell">
+    <section class="dashboard-intro">
+      <div>
+        <p class="dashboard-kicker">WRENCHWORX <span>///</span> WAYNESBORO, PA</p>
+        <h1>Your shop, at a glance.</h1>
+        <p class="dashboard-subtitle">Keep customer requests moving and your mobile service details up to date.</p>
       </div>
-      {% if recent_requests %}
-        <div class="request-list">
-          {% for service_request in recent_requests %}
-            <a class="request-row" href="{% url 'admin:wrenchworx_servicerequest_change' service_request.pk %}">
-              <span class="request-avatar" aria-hidden="true">{{ service_request.name|first|upper }}</span>
-              <span class="request-main"><strong>{{ service_request.name }}</strong><small>{{ service_request.vehicle_problem|truncatechars:78 }}</small></span>
-              <span class="request-meta"><span class="status-pill status-{{ service_request.status }}">{{ service_request.get_status_display }}</span><small>{{ service_request.created_at|date:"M j, g:i A" }}</small></span>
-              <span class="request-arrow" aria-hidden="true">↗</span>
-            </a>
-          {% endfor %}
-        </div>
-      {% else %}
-        <div class="empty-requests"><span class="empty-icon" aria-hidden="true">✓</span><strong>All caught up.</strong><p>New website requests will show up here.</p></div>
+      {% if perms.wrenchworx.add_servicerequest %}
+        <a class="dashboard-primary" href="{% url 'admin:wrenchworx_servicerequest_add' %}">＋ <span>ADD REQUEST</span></a>
       {% endif %}
     </section>
 
-    <aside class="dashboard-side">
-      <section class="dashboard-panel quick-panel">
-        <div class="panel-heading"><div><p class="panel-eyebrow">KEEP IT CURRENT</p><h2>Business setup</h2></div></div>
-        <a class="setup-link" href="{% url 'admin:wrenchworx_service_changelist' %}"><span class="setup-icon">⚙</span><span><strong>Services</strong><small>Manage offerings and pricing</small></span><b>↗</b></a>
-        <a class="setup-link" href="{% url 'admin:wrenchworx_servicearea_changelist' %}"><span class="setup-icon">⌖</span><span><strong>Service areas</strong><small>{{ active_area_count }} active {% if active_area_count == 1 %}area{% else %}areas{% endif %}</small></span><b>↗</b></a>
-        <a class="setup-link" href="{% url 'admin:wrenchworx_galleryphoto_changelist' %}"><span class="setup-icon">▧</span><span><strong>Photo gallery</strong><small>{{ published_gallery_photo_count }} published {% if published_gallery_photo_count == 1 %}photo{% else %}photos{% endif %}</small></span><b>↗</b></a>
-        {% if perms.wrenchworx.view_businessprofile %}
-          <a class="setup-link" href="{% url 'admin:wrenchworx_businessprofile_changelist' %}"><span class="setup-icon">▤</span><span><strong>Business details</strong><small>Contact and booking info</small></span><b>↗</b></a>
+    <section class="metric-grid" aria-label="Business overview">
+      <a class="metric-card metric-card-highlight" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}?status__exact=new">
+        <span class="metric-label">NEW REQUESTS</span>
+        <strong>{{ new_request_count }}</strong>
+        <span class="metric-foot">Needs a first response <i>↗</i></span>
+      </a>
+      <a class="metric-card" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}?status__exact=scheduled">
+        <span class="metric-label">SCHEDULED</span>
+        <strong>{{ scheduled_request_count }}</strong>
+        <span class="metric-foot">Jobs on the calendar <i>↗</i></span>
+      </a>
+      <a class="metric-card" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}">
+        <span class="metric-label">OPEN REQUESTS</span>
+        <strong>{{ open_request_count }}</strong>
+        <span class="metric-foot">Still in progress <i>↗</i></span>
+      </a>
+      <a class="metric-card" href="{% url 'admin:wrenchworx_service_changelist' %}">
+        <span class="metric-label">ACTIVE SERVICES</span>
+        <strong>{{ active_service_count }}</strong>
+        <span class="metric-foot">Shown on your website <i>↗</i></span>
+      </a>
+    </section>
+
+    <div class="dashboard-columns">
+      <section class="dashboard-panel recent-panel">
+        <div class="panel-heading">
+          <div><p class="panel-eyebrow">INCOMING WORK</p><h2>Recent requests</h2></div>
+          <a class="panel-link" href="{% url 'admin:wrenchworx_servicerequest_changelist' %}">ALL REQUESTS <span>↗</span></a>
+        </div>
+        {% if recent_requests %}
+          <div class="request-list">
+            {% for service_request in recent_requests %}
+              <a class="request-row" href="{% url 'admin:wrenchworx_servicerequest_change' service_request.pk %}">
+                <span class="request-avatar" aria-hidden="true">{{ service_request.name|first|upper }}</span>
+                <span class="request-main"><strong>{{ service_request.name }}</strong><small>{{ service_request.vehicle_problem|truncatechars:78 }}</small></span>
+                <span class="request-meta"><span class="status-pill status-{{ service_request.status }}">{{ service_request.get_status_display }}</span><small>{{ service_request.created_at|date:"M j, g:i A" }}</small></span>
+                <span class="request-arrow" aria-hidden="true">↗</span>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty-requests"><span class="empty-icon" aria-hidden="true">✓</span><strong>All caught up.</strong><p>New website requests will show up here.</p></div>
         {% endif %}
       </section>
-      <section class="dashboard-note"><span class="note-mark" aria-hidden="true">W</span><p><strong>Built around your work.</strong><br>Keep requests organized, follow up fast, and get back to the repair.</p></section>
-    </aside>
+
+      <aside class="dashboard-side">
+        <section class="dashboard-panel quick-panel">
+          <div class="panel-heading"><div><p class="panel-eyebrow">KEEP IT CURRENT</p><h2>Business setup</h2></div></div>
+          <a class="setup-link" href="{% url 'admin:wrenchworx_service_changelist' %}"><span class="setup-icon">⚙</span><span><strong>Services</strong><small>Manage offerings and pricing</small></span><b>↗</b></a>
+          <a class="setup-link" href="{% url 'admin:wrenchworx_servicearea_changelist' %}"><span class="setup-icon">⌖</span><span><strong>Service areas</strong><small>{{ active_area_count }} active {% if active_area_count == 1 %}area{% else %}areas{% endif %}</small></span><b>↗</b></a>
+          <a class="setup-link" href="{% url 'admin:wrenchworx_galleryphoto_changelist' %}"><span class="setup-icon">▧</span><span><strong>Photo gallery</strong><small>{{ published_gallery_photo_count }} published {% if published_gallery_photo_count == 1 %}photo{% else %}photos{% endif %}</small></span><b>↗</b></a>
+          {% if perms.wrenchworx.view_businessprofile %}
+            <a class="setup-link" href="{% url 'admin:wrenchworx_businessprofile_changelist' %}"><span class="setup-icon">▤</span><span><strong>Business details</strong><small>Contact and booking info</small></span><b>↗</b></a>
+          {% endif %}
+        </section>
+        <section class="dashboard-note"><span class="note-mark" aria-hidden="true">W</span><p><strong>Built around your work.</strong><br>Keep requests organized, follow up fast, and get back to the repair.</p></section>
+      </aside>
+    </div>
   </div>
-</div>
 {% endblock %}

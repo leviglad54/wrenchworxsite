@@ -42,8 +42,18 @@ def _send_service_request_sms(service_request):
     recipient = settings.SMS_NOTIFICATION_TO
     sender = settings.TWILIO_FROM_NUMBER
     messaging_service = settings.TWILIO_MESSAGING_SERVICE_SID
-    credentials = (api_key_sid, api_key_secret) if api_key_sid and api_key_secret else (account_sid, auth_token)
-    if not (account_sid and credentials[0] and credentials[1] and recipient and (sender or messaging_service)):
+    credentials = (
+        (api_key_sid, api_key_secret)
+        if api_key_sid and api_key_secret
+        else (account_sid, auth_token)
+    )
+    if not (
+        account_sid
+        and credentials[0]
+        and credentials[1]
+        and recipient
+        and (sender or messaging_service)
+    ):
         return
 
     body = (
@@ -57,7 +67,9 @@ def _send_service_request_sms(service_request):
     else:
         data["From"] = sender
 
-    authorization = base64.b64encode(f"{credentials[0]}:{credentials[1]}".encode()).decode()
+    authorization = base64.b64encode(
+        f"{credentials[0]}:{credentials[1]}".encode()
+    ).decode()
     req = Request(
         f"https://api.twilio.com/2010-04-01/Accounts/{account_sid}/Messages.json",
         data=urlencode(data).encode(),
@@ -67,6 +79,14 @@ def _send_service_request_sms(service_request):
     try:
         with urlopen(req, timeout=8) as response:
             if response.status >= 300:
-                logger.warning("Twilio returned HTTP %s for service request %s", response.status, service_request.pk)
+                logger.warning(
+                    "Twilio returned HTTP %s for service request %s",
+                    response.status,
+                    service_request.pk,
+                )
     except (HTTPError, URLError, TimeoutError, OSError) as exc:
-        logger.warning("SMS notification failed for service request %s: %s", service_request.pk, exc)
+        logger.warning(
+            "SMS notification failed for service request %s: %s",
+            service_request.pk,
+            exc,
+        )
