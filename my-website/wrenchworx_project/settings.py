@@ -81,3 +81,7 @@ TWILIO_AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN", "")
 TWILIO_FROM_NUMBER = os.environ.get("TWILIO_FROM_NUMBER", "")
 TWILIO_MESSAGING_SERVICE_SID = os.environ.get("TWILIO_MESSAGING_SERVICE_SID", "")
 SMS_NOTIFICATION_TO = os.environ.get("SMS_NOTIFICATION_TO", "")
+
+
+# Neon pooled connections must not use server-side cursors.
+DATABASES["default"]["DISABLE_SERVER_SIDE_CURSORS"] = True
